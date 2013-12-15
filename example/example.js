@@ -1,10 +1,14 @@
 $(document).ready(function() {
     var manager = new AppCrafted("rbw84XwK9nTMwWZecQxr");
-    var assetIDs = ["0", "1"];
+    var assetIDs = ["0", "1", "2", "3"];
     var i = 0;
     manager.getAsset("C0zX5M3dvr0KOww3UtXf", assetIDs[i], onLoaded);
-    $("#cycle").click(function() {
+    $("#next").click(function() {
 	i = ++i % assetIDs.length;
+	manager.getAsset("C0zX5M3dvr0KOww3UtXf", assetIDs[i], onLoaded);
+    });
+    $("#prev").click(function() {
+	i = (i + assetIDs.length - 1) % assetIDs.length;
 	manager.getAsset("C0zX5M3dvr0KOww3UtXf", assetIDs[i], onLoaded);
     });
 });
@@ -13,11 +17,7 @@ function onLoaded(err, data) {
     if (err) {
 	console.log(err);
     } else {
-	if (!!data["image"]) {
-	    $("#image").attr("src", data["image"]);
-	}
-	if (!!data["text"]) {
-	    $("#caption").text( data["text"] );
-	}
+	$("#image").attr("src", !!data["image"] ? data["image"] : null);
+	$("#caption").text(!!data["text"] ? data["text"] : "");
     }
 }
