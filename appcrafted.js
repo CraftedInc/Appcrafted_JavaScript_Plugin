@@ -36,7 +36,7 @@ AppCrafted.prototype.getAsset = function(cSpaceID, assetID, onLoaded) {
 			asset = data.Assets[i];
 		    }
 		}
-		onLoaded.call(this, asset ? null : "Asset Not Found", asset);
+		onLoaded.call(_this, asset ? null : "Asset Not Found", asset);
 	    }
 	});
     }
