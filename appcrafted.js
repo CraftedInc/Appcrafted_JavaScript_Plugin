@@ -2,7 +2,7 @@
  * AppCrafted JavaScript plugin. Requires jQuery > 1.5.
  */
 function AppCrafted(accessKey) {
-    this.endpoint = "http://api.appcrafted.com/exp/cspace/"
+    this.endpoint = "http://api.appcrafted.com/exp/cspace/";
     this.authHeader = "Basic " + window.btoa(accessKey + ":");
     this.cSpaces = {};
 }
