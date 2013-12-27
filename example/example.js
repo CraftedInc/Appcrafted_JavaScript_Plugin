@@ -17,7 +17,7 @@ function onLoaded(err, data) {
     if (err) {
 	console.log(err);
     } else {
-	$("#image").attr("src", !!data["image"] ? data["image"] : null);
-	$("#caption").text(!!data["text"] ? data["text"] : "");
+	$("#image").attr("src", !!data["image"] ? data["image"]["Value"] : null);
+	$("#caption").text(!!data["caption"] ? data["caption"]["Value"] : "");
     }
 }
