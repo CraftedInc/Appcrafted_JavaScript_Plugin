@@ -2,27 +2,27 @@
  * AppCrafted JavaScript plugin. Requires jQuery > 1.5.
  */
 function AppCrafted(accessKey) {
-    this.endpoint = "http://api.appcrafted.com/exp/cspace/";
+    this.endpoint = "http://api.appcrafted.com/v0/assets/";
     this.authHeader = "Basic " + window.btoa(accessKey + ":");
-    this.cSpaces = {};
+    this.containers = {};
 }
 /**
  * Retrieves the specified Asset.
  */
-AppCrafted.prototype.getAsset = function(cSpaceID, assetID, onLoaded) {
-    var cSpace = this.cSpaces[cSpaceID];
+AppCrafted.prototype.getAsset = function(containerID, assetID, onLoaded) {
+    var container = this.containers[containerID];
     var asset = null;
-    if (cSpace) {
-	for (var i = 0; i < cSpace.length; i++) {
-	    if (cSpace[i].AssetID == assetID) {
-		asset = cSpace[i];
+    if (container) {
+	for (var i = 0; i < container.length; i++) {
+	    if (container[i].AssetID == assetID) {
+		asset = container[i];
 	    }
 	}
 	onLoaded.call(this, asset ? null : "Asset Not Found", asset);
     } else {
 	var _this = this;
 	$.ajax({
-	    url: _this.endpoint + cSpaceID + "/asset",
+	    url: _this.endpoint + containerID + "/all",
 	    type: "GET",
 	    dataType: "json",
 	    headers: {"Authorization": _this.authHeader},
@@ -30,7 +30,7 @@ AppCrafted.prototype.getAsset = function(cSpaceID, assetID, onLoaded) {
 		onLoaded.call(_this, error || "Server Error", null);
 	    },
 	    success: function(data) {
-		_this.cSpaces[cSpaceID] = data.Assets;
+		_this.containers[containerID] = data.Assets;
 		for (var i = 0; i < data.Assets.length; i++) {
 		    if (data.Assets[i].AssetID == assetID) {
 			asset = data.Assets[i];
