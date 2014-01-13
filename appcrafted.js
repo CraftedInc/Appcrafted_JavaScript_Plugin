@@ -1,24 +1,31 @@
 /**
- * AppCrafted JavaScript plugin. Requires jQuery > 1.5.
+ * Appcrafted JavaScript plugin. Requires jQuery > 1.5.
  */
-function AppCrafted(accessKey) {
+function Appcrafted(accessKey) {
     this.endpoint = "http://api.appcrafted.com/v0/assets/";
     this.authHeader = "Basic " + window.btoa(accessKey + ":");
     this.containers = {};
 }
 /**
+ * Clears the asset cache, forcing the plugin to get fresh data from the server.
+ */
+Appcrafted.prototype.clearCache = function() {
+    this.containers = {};
+};
+/**
  * Retrieves the specified Asset.
  */
-AppCrafted.prototype.getAsset = function(containerID, assetID, onLoaded) {
+Appcrafted.prototype.getAsset = function(containerID, assetID, callback) {
     var container = this.containers[containerID];
     var asset = null;
     if (container) {
 	for (var i = 0; i < container.length; i++) {
 	    if (container[i].AssetID == assetID) {
 		asset = container[i];
+		break;
 	    }
 	}
-	onLoaded.call(this, asset ? null : "Asset Not Found", asset);
+	callback.call(this, asset ? null : "Asset Not Found", asset);
     } else {
 	var _this = this;
 	$.ajax({
@@ -27,7 +34,7 @@ AppCrafted.prototype.getAsset = function(containerID, assetID, onLoaded) {
 	    dataType: "json",
 	    headers: {"Authorization": _this.authHeader},
 	    error: function(xhr, status, error) {
-		onLoaded.call(_this, error || "Server Error", null);
+		callback.call(_this, error || "Server Error", null);
 	    },
 	    success: function(data) {
 		_this.containers[containerID] = data.Assets;
@@ -36,8 +43,27 @@ AppCrafted.prototype.getAsset = function(containerID, assetID, onLoaded) {
 			asset = data.Assets[i];
 		    }
 		}
-		onLoaded.call(_this, asset ? null : "Asset Not Found", asset);
+		callback.call(_this, asset ? null : "Asset Not Found", asset);
 	    }
 	});
     }
+};
+/**
+ * Updates the specified Asset.
+ */
+Appcrafted.prototype.updateAsset = function(params, containerID, assetID, callback) {
+    var _this = this;
+    $.ajax({
+	url: _this.endpoint + containerID + "/" + assetID,
+	type: "PUT",
+	dataType: "json",
+	data: params,
+	headers: {"Authorization": _this.authHeader},
+	error: function(xhr, status, error) {
+	    callback.call(_this, error || "Server Error", null);
+	},
+	success: function(data) {
+	    callback.call(_this, null, data.message || "Asset Updated");
+	}
+    });
 };
