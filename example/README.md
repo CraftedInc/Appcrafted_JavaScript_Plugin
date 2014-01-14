@@ -20,7 +20,7 @@ Edit `example.js` and edit the following lines. Supply Asset IDs in an array.
       var containerID = YOUR_CONTAINER_ID;
       var assetIDs = [FIRST_ASSET_ID, SECOND_ASSET_ID];
 
-**NOTE:** To use this example correctly, your assets should include these two attributes:
+**NOTE:** To use this example correctly, your assets should include these two attributes. Edit assets through the [developer console](https://developer.appcrafted.com).
 
 	  Attribute Name: "image", Type: "Image"
 
