@@ -14,11 +14,17 @@ Edit `index.html` to make sure that `appcrafted.js`, `example.js` are correctly 
 
 ### Step 3 (optional): Use your own Access Key, Container ID, and Asset IDs.
 
-Edit `example.js` and edit the following lines.
+Edit `example.js` and edit the following lines. Supply Asset IDs in an array.
 
       var accessKey = YOUR_ACCESS_KEY;
       var containerID = YOUR_CONTAINER_ID;
       var assetIDs = [FIRST_ASSET_ID, SECOND_ASSET_ID];
+
+**NOTE:** To use this example correctly, your assets should include these two attributes:
+
+	  Attribute Name: "image", Type: "Image"
+
+	  Attribute Name: "caption", Type: "String"
 
 ### Step 4: Run.
 
