@@ -13,25 +13,6 @@ Appcrafted.prototype.clearCache = function() {
     this.containers = {};
 };
 /**
- * Create an asset in the specified container.
- */
-Appcrafted.prototype.createAsset = function(params, containerID, callback) {
-    var _this = this;
-    $.ajax({
-	url: _this.endpoint + containerID,
-	type: "POST",
-	dataType: "json",
-	data: params,
-	headers: {"Authorization": _this.authHeader},
-	error: function(xhr, status, error) {
-	    callback.call(_this, error || "Failed to Create Asset", null);
-	},
-	success: function(data) {
-	    callback.call(_this, null, data.message || "Asset Created");
-	}
-    });
-};
-/**
  * Retrieve the specified asset.
  */
 Appcrafted.prototype.getAsset = function(containerID, assetID, callback) {
@@ -66,41 +47,4 @@ Appcrafted.prototype.getAsset = function(containerID, assetID, callback) {
 	    }
 	});
     }
-};
-/**
- * Update the specified Asset.
- */
-Appcrafted.prototype.updateAsset = function(params, containerID, assetID, callback) {
-    var _this = this;
-    $.ajax({
-	url: _this.endpoint + containerID + "/" + assetID,
-	type: "PUT",
-	dataType: "json",
-	data: params,
-	headers: {"Authorization": _this.authHeader},
-	error: function(xhr, status, error) {
-	    callback.call(_this, error || "Failed to Update Asset", null);
-	},
-	success: function(data) {
-	    callback.call(_this, null, data.message || "Asset Updated");
-	}
-    });
-};
-/**
- * Delete the specified Asset.
- */
-Appcrafted.prototype.deleteAsset = function(containerID, assetID, callback) {
-    var _this = this;
-    $.ajax({
-	url: _this.endpoint + containerID + "/" + assetID,
-	type: "DELETE",
-	dataType: "json",
-	headers: {"Authorization": _this.authHeader},
-	error: function(xhr, status, error) {
-	    callback.call(_this, error || "Failed to Delete Asset", null);
-	},
-	success: function(data) {
-	    callback.call(_this, null, data.message || "Asset Deleted");
-	}
-    });
 };
