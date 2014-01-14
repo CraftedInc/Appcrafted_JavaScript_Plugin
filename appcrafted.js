@@ -7,13 +7,32 @@ function Appcrafted(accessKey) {
     this.containers = {};
 }
 /**
- * Clears the asset cache, forcing the plugin to get fresh data from the server.
+ * Clear the asset cache.
  */
 Appcrafted.prototype.clearCache = function() {
     this.containers = {};
 };
 /**
- * Retrieves the specified Asset.
+ * Create an asset in the specified container.
+ */
+Appcrafted.prototype.createAsset = function(params, containerID, callback) {
+    var _this = this;
+    $.ajax({
+	url: _this.endpoint + containerID,
+	type: "POST",
+	dataType: "json",
+	data: params,
+	headers: {"Authorization": _this.authHeader},
+	error: function(xhr, status, error) {
+	    callback.call(_this, error || "Failed to Create Asset", null);
+	},
+	success: function(data) {
+	    callback.call(_this, null, data.message || "Asset Created");
+	}
+    });
+};
+/**
+ * Retrieve the specified asset.
  */
 Appcrafted.prototype.getAsset = function(containerID, assetID, callback) {
     var container = this.containers[containerID];
@@ -34,7 +53,7 @@ Appcrafted.prototype.getAsset = function(containerID, assetID, callback) {
 	    dataType: "json",
 	    headers: {"Authorization": _this.authHeader},
 	    error: function(xhr, status, error) {
-		callback.call(_this, error || "Server Error", null);
+		callback.call(_this, error || "Failed to Retrieve Asset", null);
 	    },
 	    success: function(data) {
 		_this.containers[containerID] = data.Assets;
@@ -49,7 +68,7 @@ Appcrafted.prototype.getAsset = function(containerID, assetID, callback) {
     }
 };
 /**
- * Updates the specified Asset.
+ * Update the specified Asset.
  */
 Appcrafted.prototype.updateAsset = function(params, containerID, assetID, callback) {
     var _this = this;
@@ -60,10 +79,28 @@ Appcrafted.prototype.updateAsset = function(params, containerID, assetID, callba
 	data: params,
 	headers: {"Authorization": _this.authHeader},
 	error: function(xhr, status, error) {
-	    callback.call(_this, error || "Server Error", null);
+	    callback.call(_this, error || "Failed to Update Asset", null);
 	},
 	success: function(data) {
 	    callback.call(_this, null, data.message || "Asset Updated");
+	}
+    });
+};
+/**
+ * Delete the specified Asset.
+ */
+Appcrafted.prototype.deleteAsset = function(containerID, assetID, callback) {
+    var _this = this;
+    $.ajax({
+	url: _this.endpoint + containerID + "/" + assetID,
+	type: "DELETE",
+	dataType: "json",
+	headers: {"Authorization": _this.authHeader},
+	error: function(xhr, status, error) {
+	    callback.call(_this, error || "Failed to Delete Asset", null);
+	},
+	success: function(data) {
+	    callback.call(_this, null, data.message || "Asset Deleted");
 	}
     });
 };
