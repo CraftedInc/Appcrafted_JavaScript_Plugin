@@ -28,4 +28,6 @@ Edit `example.js` and edit the following lines. Supply Asset IDs in an array.
 
 ### Step 4: Run.
 
-Open `index.html` and try it out! If you're using your own Access Key and assets, try editing them in the [developer console](https://developer.appcrafted.com). Understand that assets are cached by the plugin, so you will need to refresh the page to see your changes.
+Open `index.html` and try it out! If you're using your own Access Key and assets, try editing them in the [developer console](https://developer.appcrafted.com).
+
+**NOTE:** Assets are cached by the plugin, so you will need to refresh the page to see your changes.
