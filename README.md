@@ -31,7 +31,9 @@ Be sure to define a callback, in this case `assetLoaded`, to be called with the 
 ## Methods
 
 Retrieve the specified asset.
-    getAsset(<CONTAINER_ID>, <ASSET_ID>, callback)
+
+`getAsset(<CONTAINER_ID>, <ASSET_ID>, assetLoaded)`
 
 Clear the asset cache. Assets are cached by the plugin, and clearing the cache forces the plugin to grab fresh assets.
-    clearCache()
+
+`clearCache()`
